@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-def replace_in_list(my_list, idx, element):
-    if idx < 0 or idx >= len(my_list):
-        return my_list
-    my_list[idx] = element
-    return my_list
+def uniq_add(my_list=[]):
+    unique_sum = 0
+
+    for num in set(my_list):
+        unique_sum += num
+
+    return unique_sum

@@ -1,12 +1,8 @@
 #!/usr/bin/python3
-def max_integer(my_list=[]):
-    if len(my_list) == 0:
-        return None
+def multiply_by_2(a_dictionary):
+    new_dict = {}
 
-    max_num = my_list[0]
+    for key, value in a_dictionary.items():
+        new_dict[key] = value * 2
 
-    for num in my_list:
-        if num > max_num:
-            max_num = num
-
-    return max_num
+    return new_dict

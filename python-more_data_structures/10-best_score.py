@@ -1,11 +1,14 @@
 #!/usr/bin/python3
-def divisible_by_2(my_list=[]):
-    result = []
+def best_score(a_dictionary):
+    if not a_dictionary:
+        return None
 
-    for num in my_list:
-        if num % 2 == 0:
-            result.append(True)
-        else:
-            result.append(False)
+    best_key = None
+    best_value = float('-inf')
 
-    return result
+    for key, value in a_dictionary.items():
+        if value > best_value:
+            best_value = value
+            best_key = key
+
+    return best_key
