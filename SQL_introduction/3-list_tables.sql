@@ -1,0 +1,2 @@
+-- salam
+SHOW TABLES;
