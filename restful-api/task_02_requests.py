@@ -1,32 +1,40 @@
-#/usr/bin/python3
-#-*- coding:utf-8 -*-
-#task_02_requests.py
+#!/usr/bin/python3
+"""API data using requests."""
 
-import unittest
-from study_181130_request.task_01_requests import HttpRequests
+import requests
+import csv
 
-COOKIES=None
 
-class TestHttpRequests(unittest.TestCase):
+URL = "https://jsonplaceholder.typicode.com/posts"
 
-    def setUp(self):
-        pass
 
-    def __init__(self,url,param,http_method,excepted,methodName):
-        self.param=param
-        self.http_method=http_method
-        self.url=url
-        self.excepted=excepted
-        super(TestHttpRequests,self).__init__(methodName)
+def fetch_and_print_posts():
+    """Fetch posts and print status + titles."""
+    response = requests.get(URL)
+    print(f"Status Code: {response.status_code}")
 
-    def test_api(self):
-        global COOKIES
-        res=HttpRequests().http_requests(self.url,self.param,self.http_method,COOKIES)
-        try:
-            self.assertEqual(self.excepted,res.json()['msg'])
-        except AssertionError as e:
-            print('断言结果是：{}'.format(e))
-            raise e
+    if response.status_code == 200:
+        posts = response.json()
+        for post in posts:
+            print(post.get("title"))
 
-        if res.cookies:
-            COOKIES=res.cookies
+
+def fetch_and_save_posts():
+    """Fetch posts and save them into CSV."""
+    response = requests.get(URL)
+
+    if response.status_code == 200:
+        posts = response.json()
+
+        data = []
+        for post in posts:
+            data.append({
+                "id": post.get("id"),
+                "title": post.get("title"),
+                "body": post.get("body")
+            })
+
+        with open("posts.csv", "w", newline='', encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=["id", "title", "body"])
+            writer.writeheader()
+            writer.writerows(data)
